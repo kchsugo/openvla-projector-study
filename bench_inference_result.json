@@ -1,0 +1,20 @@
+{
+  "baseline_mlp_frozen": {
+    "tokens": 256,
+    "latency_ms": 331.01993799209595,
+    "latency_std": 2.982124180958112,
+    "peak_vram_gb": 4.638425088
+  },
+  "honeybee": {
+    "tokens": 64,
+    "latency_ms": 259.6935749053955,
+    "latency_std": 1.3193558046372356,
+    "peak_vram_gb": 4.620699136
+  },
+  "cross_attn": {
+    "tokens": 64,
+    "latency_ms": 260.5082035064697,
+    "latency_std": 1.676002381820661,
+    "peak_vram_gb": 4.600034816
+  }
+}

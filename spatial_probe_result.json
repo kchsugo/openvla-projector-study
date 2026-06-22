@@ -1,0 +1,32 @@
+{
+  "baseline_mlp_frozen": {
+    "token_variance": 0.19576281644403934,
+    "action_readout_r2": -6.819083274309216,
+    "tokens": 256
+  },
+  "mlp_scratch": {
+    "token_variance": NaN,
+    "action_readout_r2": NaN,
+    "tokens": 256
+  },
+  "mlp_scratch_ln": {
+    "token_variance": 8.597825133800507,
+    "action_readout_r2": 0.42426901746341894,
+    "tokens": 256
+  },
+  "self_attn": {
+    "token_variance": 0.7032554296031595,
+    "action_readout_r2": 0.2773913718069224,
+    "tokens": 256
+  },
+  "honeybee": {
+    "token_variance": 0.2886330408602953,
+    "action_readout_r2": -2.1544758817875533,
+    "tokens": 64
+  },
+  "maxinfo": {
+    "token_variance": 0.19576281644403934,
+    "action_readout_r2": -6.819083274309216,
+    "tokens": 256
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "baseline_mlp_frozen": {
+    "vision_shift": 0.12812325014871043,
+    "blank_degrade": 0.06386554664006087,
+    "tokens": 256
+  },
+  "mlp_scratch": {
+    "vision_shift": 0.0690756305746115,
+    "blank_degrade": 0.11566760086017051,
+    "tokens": 256
+  },
+  "mlp_scratch_ln": {
+    "vision_shift": 0.0023716153481316057,
+    "blank_degrade": -0.025172736136074042,
+    "tokens": 256
+  },
+  "self_attn": {
+    "vision_shift": 0.0047432306962632105,
+    "blank_degrade": -0.07320261493979159,
+    "tokens": 256
+  },
+  "honeybee": {
+    "vision_shift": 0.09419234412418805,
+    "blank_degrade": 0.032119514244277274,
+    "tokens": 64
+  },
+  "maxinfo": {
+    "vision_shift": 0.12812325014871043,
+    "blank_degrade": 0.06386554664006087,
+    "tokens": 256
+  }
+}

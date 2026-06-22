@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.log
+*.bak
+*DONE
+.venv/
+venv/
+data/
+*.zip
+.DS_Store

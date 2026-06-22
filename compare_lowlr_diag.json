@@ -1,0 +1,21 @@
+{
+  "mlp_scratch": {
+    "tokens": 256,
+    "trainable_params": 71385600,
+    "token_acc": 0.741,
+    "action_l1": 0.071,
+    "action_mse": 0.0423,
+    "lr": 2e-05,
+    "steps": 3000
+  },
+  "maxinfo_scratch": {
+    "tokens": 256,
+    "trainable_params": 185481729,
+    "token_acc": 0.752,
+    "action_l1": 0.0474,
+    "action_mse": 0.0173,
+    "lr": 2e-05,
+    "steps": 3000,
+    "gamma": 0.0
+  }
+}
