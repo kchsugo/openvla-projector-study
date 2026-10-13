@@ -11,18 +11,18 @@ We never modify OpenVLA source — the projector is swapped at runtime.
 
 ## TL;DR
 
-1. **Token compression is a free lunch (on-device).** A compressing projector (honeybee)
+1. **Token compression: −21% latency at a small accuracy cost (on-device).** A compressing projector (honeybee)
    cuts visual tokens 256→64 (−75%) and latency 331→260 ms (−21%) with negligible accuracy loss.
 2. **Spatial token *mixing* is not the lever.** Adding attention/conv inside the projector does
    not help — because the **LLM's self-attention already integrates the 256 visual tokens**.
-   We prove this **causally**: blocking the LLM's vision↔vision attention collapses the frozen
+  An attention-ablation experiment supports this: blocking the LLM's vision↔vision attention collapses the frozen
    MLP (+86%) but barely touches a projector that pre-mixes (+2%).
 3. **The real lever is the projector's *input*.** OpenVLA forwards only the **penultimate ViT
    layer**; the rest is discarded. A **multi-scale** projector that also delivers earlier
    layers transfers **significantly more spatial information to the LLM** — **+31%**
    (token-wise, p=0.0018) and **+34%** (cross-scale attention, p=0.019), all seeds positive.
    This converts to lower action error **on spatially-demanding states** (−4.8%, p=0.025),
-   though it is state-conditional (slightly hurts trivial states).
+   though it is state-conditional (increases action error on trivial states (+19%)).
 
 Bonus correction: the residual-gate "γ→0 ⇒ enhancement useless" result was a **gradient
 deadlock** (double zero-init), not evidence — fixed via `zero_init_out=False`.
