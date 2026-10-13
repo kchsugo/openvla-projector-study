@@ -6,23 +6,24 @@
 
 Projector-only fine-tuning on `jaco_play` (Open-X), with the LLM and vision encoder frozen.
 We never modify OpenVLA source — the projector is swapped at runtime.
+All measurements: OpenVLA-7B (4-bit) on a single RTX 5060 8GB.
 
 ---
 
 ## TL;DR
 
 1. **Token compression: −21% latency at a small accuracy cost (on-device).** A compressing projector (honeybee)
-   cuts visual tokens 256→64 (−75%) and latency 331→260 ms (−21%) with negligible accuracy loss.
+   cuts visual tokens 256→64 (−75%) and latency 331→260 ms (−21%); action L1 rises slightly (0.0397→0.0477).
 2. **Spatial token *mixing* is not the lever.** Adding attention/conv inside the projector does
    not help — because the **LLM's self-attention already integrates the 256 visual tokens**.
-  An attention-ablation experiment supports this: blocking the LLM's vision↔vision attention collapses the frozen
+   An attention-ablation experiment supports this: blocking the LLM's vision↔vision attention collapses the frozen
    MLP (+86%) but barely touches a projector that pre-mixes (+2%).
 3. **The real lever is the projector's *input*.** OpenVLA forwards only the **penultimate ViT
    layer**; the rest is discarded. A **multi-scale** projector that also delivers earlier
    layers transfers **significantly more spatial information to the LLM** — **+31%**
    (token-wise, p=0.0018) and **+34%** (cross-scale attention, p=0.019), all seeds positive.
    This converts to lower action error **on spatially-demanding states** (−4.8%, p=0.025),
-   though it is state-conditional (increases action error on trivial states (+19%)).
+   though it is state-conditional (it increases action error on trivial states by 19%).
 
 Bonus correction: the residual-gate "γ→0 ⇒ enhancement useless" result was a **gradient
 deadlock** (double zero-init), not evidence — fixed via `zero_init_out=False`.
@@ -44,9 +45,10 @@ deadlock** (double zero-init), not evidence — fixed via `zero_init_out=False`.
 
 ## Read
 
-- **[PAPER.md](PAPER.md)** — full paper draft (motivation → method → results → conclusion, §6 = multi-scale follow-up)
-- **[FOLLOWUP_STUDY.md](FOLLOWUP_STUDY.md)** — this session's experiments + critique responses (causal/observational/downstream)
-- Supporting notes: [RESULTS.md](RESULTS.md) · [DISENTANGLE_RESULTS.md](DISENTANGLE_RESULTS.md) · [INFERENCE_EFFICIENCY.md](INFERENCE_EFFICIENCY.md) · [SCALING_RESULTS.md](SCALING_RESULTS.md) · [CONCLUSION.md](CONCLUSION.md) · [HANDOFF.md](HANDOFF.md)
+- **[PAPER.md](docs/PAPER.md)** — full paper draft (motivation → method → results → conclusion, §6 = multi-scale follow-up)
+- **[Paper (Korean, PDF)](docs/paper_ko.pdf)**
+- **[FOLLOWUP_STUDY.md](docs/FOLLOWUP_STUDY.md)** — follow-up experiments and responses to critiques (causal/observational/downstream)
+- Supporting notes: [RESULTS](docs/RESULTS.md) · [DISENTANGLE_RESULTS](docs/DISENTANGLE_RESULTS.md) · [INFERENCE_EFFICIENCY](docs/INFERENCE_EFFICIENCY.md) · [SCALING_RESULTS](docs/SCALING_RESULTS.md) · [CONCLUSION](docs/CONCLUSION.md)
 
 ## Code map
 
@@ -81,7 +83,7 @@ python make_multiscale_figures.py && python make_critique_figures.py
 Single dataset (`jaco_play`, low spatial demand); open-loop offline metrics only (no closed-loop
 rollout); `spatial_shift` is an indirect proxy. The spatial-information gain is statistically
 solid but does not yet convert to an *average* action-accuracy improvement (only on
-spatially-demanding states). See PAPER.md §5/§6.6.
+spatially-demanding states). See docs/PAPER.md §5/§6.6.
 
 ---
-*Course project, built on OpenVLA and related open-source.*
+*Independent study, built on OpenVLA and related open-source.*
